@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Edit Product - Grocer
+{% endblock %}
+
+{% block content %}
+    <h1>Edit Product</h1>
+    <form class="form" method="post">
+            <label for="name">
+                <input required value="{{product.name}}" placeholder="" name="name" type="text" class="input">
+                <span>Name</span>
+            </label>
+    
+            <label for="price">
+                <input required value="{{product.price}}" placeholder="" name="price" type="number" class="input">
+                <span>Price</span>
+            </label>
+        <label for="category" class="input">
+            <select name="category" id="category" class="input" required>
+                {% for category in categories%}
+                    {% if category.id == product.category_id %}
+                        <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                    {% else %}
+                    <option value="{{category.id}}">{{category.name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </label> 
+        <!--quantity-->
+        <label for="quantity">
+            <input required value="{{product.quantity}}" placeholder="" name="quantity" type="number" class="input">
+            <span>Quantity</span>
+        </label>
+        <!--manufacture date-->
+        <label class="text" for="manufacture_date">Manufacturing Date
+            <input required value="{{manufacture_date}}" placeholder="" max="{{nowstring}}" name="manufacture_date" type="date" class="input">
+        </label>
+
+        <input type="submit" value="Submit" class="submit">
+    </form>
+{% endblock %}
+
+{%block style %}
+<style>
+
+
+
+h1 {
+        text-align: center;
+        font-family: 'Josefin Sans', sans-serif;
+        margin-top: -100px;
+    }
+    
+        .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 3% auto; /* Centering horizontally and applying margin-top */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  gap: 6px;
+}
+
+.form label {
+  position: relative;
+}
+
+.form label .input {
+  width: 100%;
+  padding: 10px 10px 20px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+}
+
+.form label .input + span {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  color: grey;
+  font-size: 0.9em;
+  cursor: text;
+  transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown + span {
+  top: 15px;
+  font-size: 0.9em;
+}
+
+.form label .input:focus + span,.form label .input:valid + span {
+  top: 30px;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.form label .input:valid + span {
+  color: green;
+}
+
+.submit {
+  border: none;
+  outline: none;
+  background-color: royalblue;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: .3s ease;
+}
+
+.submit:hover {
+  background-color: rgb(56, 90, 194);
+}
+
+
+</style>
+{% endblock %}

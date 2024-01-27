@@ -1,0 +1,300 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Home - Grocer
+{% endblock %}
+
+
+
+{% block content %}
+        {% include 'searchbar.html' with context %}
+        
+        <div class="categories-list">
+            {% for category in categories %}
+            <div class="cardContainer">
+                <div class="card">
+                    <h3>{{category.name}}</h3>
+                    <div class="product-list">
+                        {% for product in category.products %}
+                            <div class="pcard">
+                                <div class="card-details">
+                                    <p class="text-title">{{product.name}}</p>
+                                    <p class="text-body">Price: &#8377;{{product.price}}</p>
+                                    <p class="text-body">Available: {{product.quantity}}</p>
+                                </div>
+                                <div class="add_to_cart">
+                                    <form class="product-quantity" action="{{url_for('add_to_cart', product_id=product.id)}}" method="post">
+                                        <button  onclick="decreaseqty({{product.id}})" type="button" class="btn btn-outline-danger">
+                                            <span>-</span>
+                                        </button>
+                                        <input class="form-control quantity-input-{{product.id}}" type="number" name="quantity" id="quantity" value="1" min="1" max="{{product.quantity}}" required>
+                                        <button  onclick="increaseqty({{product.id}},{{product.quantity}})" type="button" class="btn btn-outline-success">
+                                            <span>+</span>
+                                        </button>
+                                        <button type="submit" class="card-button cartbutt">
+                                        <span>Add to cart</span>
+                                        <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart"> <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle> <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle> <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path> <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline> </g> </g></svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+{% endblock %}
+
+
+{% block style %}
+<style>
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 6,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.sbtn{
+    height: 10px;
+    width: 10px;
+    background-color: #bebebe;
+}
+
+.categories-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+h3{
+    margin-left: 2%;
+    padding-bottom: 5px;
+    font-size: 2.4em;
+    font-weight: bold;
+    font-family: 'Josefin Sans', sans-serif;
+    margin-bottom: 0;
+}
+
+.btn:focus{
+    border-color:whitesmoke;
+    -webkit-box-shadow:none;
+    box-shadow: none;
+}
+
+.form-control:focus{
+    border-color:whitesmoke;
+    -webkit-box-shadow:none;
+    box-shadow: none;
+}
+
+/* For Firefox */
+input[type="number"] {
+    width: 45px;
+  -moz-appearance: textfield;
+}
+
+/* For Chrome, Safari, and Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cardContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  margin: 32px 0;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content:center;
+  padding: 20px 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(60px);
+  background-color: rgba(65, 65, 65, 0.308);
+  border: 1px solid rgba(255, 255, 255, 0.089);
+  cursor: pointer;
+}
+
+.cardContainer::before {
+  width: 200px;
+  height: 200px;
+  content: "";
+  position: absolute;
+  background-color: rgb(144, 161, 255);
+  z-index: -1;
+  border-radius: 50%;
+  right: 2%;
+  top: 50px;
+  transition: all 2s;
+}
+
+.cardContainer:hover::before {
+  transform: translate(-1000px, 150px);
+}
+
+.product-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.product-quantity{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:0 ;
+    margin-right: 10px;
+    margin-bottom: 40px;
+}
+
+.product-quantity:focus{
+    outline: none;
+}
+
+.pcard {
+ width: 300px;
+ margin: 16px;
+ height: 254px;
+ border-radius: 20px;
+ background: #f5f5f5;
+ position: relative;
+ padding: 16px;
+ padding-left: 30px;
+ flex-direction: column;
+ align-items: center;
+ border: 2px solid #c3c6ce;
+ transition: 0.5s ease-out;
+ overflow: visible;
+}
+
+.card-details {
+    margin-top:0;
+    margin-bottom: 12px;
+ color: black;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+}
+
+.card-button {
+ transform: translate(-50%, 125%);
+ width: 60%;
+ border-radius: 1rem;
+ border: none;
+ background-color: #008bf8;
+ color: #fff;
+ font-size: 1rem;
+ padding: .5rem 1rem;
+ position: absolute;
+ left: 50%;
+ bottom: 0;
+ opacity: 0;
+ transition: 0.3s ease-out;
+}
+
+.text-body {
+ color: rgb(134, 134, 134);
+ font-size: 1.2em;
+ display: flex;
+ margin-bottom:10px;
+ flex-direction: column;
+ align-items: flex-start;
+}
+
+/*Text*/
+.text-title {
+ font-size: 1.8em;
+ font-weight: bold;
+ font-family: "Mukta", sans-serif;
+}
+
+/*Hover*/
+.pcard:hover {
+ border-color: #008bf8;
+ box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+}
+
+.pcard:hover .card-button {
+ transform: translate(-50%, 50%);
+ opacity: 1;
+}
+
+.cartbutt {
+  height: 60px;
+  width: 200px;
+  background-color: #132233;
+  border: 2px solid rgb(182, 128, 128);
+  color: #eee;
+  transition: .6s;
+  font-size: 15px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 20px; */
+  overflow: hidden;
+}
+
+.cartbutt span {
+  transform: translateX(10px);
+  transition: .5s;
+}
+
+.cartbutt svg {
+  transform: translateX(-300px);
+  transition: .6s;
+  z-index: 3;
+  height: 20px;
+}
+
+.cartbutt:hover {
+  width: 60px;
+  background-color: #554755;
+  box-shadow: 20px 20px 96px #bebebe,-20px -20px 96px #ffffff;
+}
+
+.cartbutt:hover svg {
+  transform: translateX(-5px);
+}
+
+.cartbutt:hover span {
+  transform: translateY(70px);
+  font-size: .1rem;
+}
+
+</style>
+{% endblock %}
+
+{% block script%}
+<script>
+    function increaseqty(id, max){
+        var quantity = document.querySelector(".quantity-input-"+id);
+        if(quantity.value < max){
+            quantity.value = parseInt(quantity.value)+1;
+        }
+    }
+    function decreaseqty(id){
+        var quantity = document.querySelector(".quantity-input-"+id);
+        if(quantity.value>1){
+            quantity.value = parseInt(quantity.value)-1;
+        }
+    }
+</script>
+{% endblock%}

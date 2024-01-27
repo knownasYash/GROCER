@@ -1,0 +1,341 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Products of {{category.name}} - Grocer
+{% endblock %}
+
+{% block content %}
+    <h1>Products of {{category.name}}</h1>
+    <div class="heading">
+        <h2>Products</h2>
+        <a type="button" class="button" href="{{url_for('add_product', category_id=category.id)}}">
+            <span class="button__text">Add </span>
+            <span class="button__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                    <line y2="19" y1="5" x2="12" x1="12"></line>
+                    <line y2="12" y1="12" x2="19" x1="5"></line>
+                </svg>
+            </span>
+        </a>
+    </div>
+    <h5 class="text-muted">
+        <em>
+            Showing Products of Category {{category.name}} only.
+        </em>
+    </h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Id</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Manufacture Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in category.products %}
+                <tr>
+                    <td>{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.man_date}}</td>
+                    <td style="vertical-align: middle;">
+                        <div class="action-buttons">
+                            <a class="button-e" href="{{url_for('edit_product', id=product.id)}}">
+                                <svg class="svg-icon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <g stroke="#a649da" stroke-linecap="round" stroke-width="2">
+                                        <path d="m20 20h-16"></path>
+                                        <path clip-rule="evenodd" d="m14.5858 4.41422c.781-.78105 2.0474-.78105 2.8284 0 .7811.78105.7811 2.04738 0 2.82843l-8.28322 8.28325-3.03046.202.20203-3.0304z" fill-rule="evenodd"></path>
+                                    </g>
+                                </svg>
+                                <span class="label">Edit</span>
+                            </a>
+                            <a class="bin-button" href="{{url_for('delete_product', id=product.id)}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 7" class="bin-top">
+                                    <line stroke-width="4" stroke="white" y2="5" x2="39" y1="5"></line>
+                                    <line stroke-width="3" stroke="white" y2="1.5" x2="26.0357" y1="1.5" x1="12"></line>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 33 39" class="bin-bottom">
+                                    <mask fill="white" id="path-1-inside-1_8_19">
+                                        <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
+                                    </mask>
+                                    <path mask="url(#path-1-inside-1_8_19)" fill="white" d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"></path>
+                                    <path stroke-width="4" stroke="white" d="M12 6L12 29"></path>
+                                    <path stroke-width="4" stroke="white" d="M21 6V29"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 89 80" class="garbage">
+                                    <path fill="white" d="M20.5 10.5L37.5 15.5L42.5 11.5L51.5 12.5L68.75 0L72 11.5L79.5 12.5H88.5L87 22L68.75 31.5L75.5066 25L86 26L87 35.5L77.5 48L70.5 49.5L80 50L77.5 71.5L63.5 58.5L53.5 68.5L65.5 70.5L45.5 73L35.5 79.5L28 67L16 63L12 51.5L0 48L16 25L22.5 17L20.5 10.5Z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1%;
+    }
+
+    h1 {
+        text-align: center;
+        font-family: 'Josefin Sans', sans-serif;
+        margin-top: -325px;
+    }
+
+    h2 {
+        text-align: center;
+        font-family: 'Josefin Sans', sans-serif;
+    }
+
+    h5{
+        
+        margin-top: 1%;
+    }
+
+
+    .button {
+        position: relative;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border: 1px solid #34974d;
+        background-color: #3aa856;
+        text-decoration: none;
+    }
+
+    .button, .button__icon, .button__text {
+        transition: all 0.3s;
+    }
+
+    .button .button__text {
+        transform: translateX(30px);
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .button .button__icon {
+        position: absolute;
+        transform: translateX(109px);
+        height: 100%;
+        width: 39px;
+        background-color: #34974d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .button .svg {
+        width: 30px;
+        stroke: #fff;
+    }
+
+    .button:hover {
+        background: #34974d;
+    }
+
+    .button:hover .button__text {
+        color: transparent;
+    }
+
+    .button:hover .button__icon {
+        width: 148px;
+        transform: translateX(0);
+    }
+
+    .button:active .button__icon {
+        background-color: #2e8644;
+    }
+
+    .button:active {
+        border: 1px solid #2e8644;
+    }
+
+    .bin-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgb(255, 95, 95);
+        cursor: pointer;
+        border: 2px solid rgb(255, 201, 201);
+        transition-duration: 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .bin-bottom {
+        width: 12px;
+        z-index: 2;
+    }
+
+    .bin-top {
+        width: 15px;
+        transform-origin: right;
+        transition-duration: 0.3s;
+        z-index: 2;
+    }
+
+    .bin-button:hover .bin-top {
+        transform: rotate(45deg);
+    }
+
+    .bin-button:hover {
+        background-color: rgb(255, 0, 0);
+    }
+
+    .bin-button:active {
+        transform: scale(0.9);
+    }
+
+    .garbage {
+        position: absolute;
+        width: 14px;
+        height: auto;
+        z-index: 1;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+
+    .bin-button:hover .garbage {
+        animation: throw 0.4s linear;
+    }
+
+    @keyframes throw {
+        from {
+            transform: translate(-400%, -700%);
+            opacity: 0;
+        }
+        to {
+            transform: translate(0%, 0%);
+            opacity: 1;
+        }
+    }
+
+    
+    .open-file {
+  background-color: rgb(255, 255, 255);
+  width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border: 1px solid rgb(217, 217, 217);
+  font-size: 17px;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 20px;
+  text-decoration: none;
+  font-family: sans-serif;
+}
+.file-wrapper {
+  width: 15px;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  left: 6px;
+}
+.file-wrapper svg {
+  width: 100%;
+}
+.file-front {
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  border: 2px solid rgb(0, 0, 0);
+  border-bottom: 1px solid black;
+  transform: skewX(-40deg);
+  transform-origin: bottom right;
+  background-color: white;
+  transition: all 0.5s;
+  bottom: 0;
+}
+.open-file:hover .file-front {
+  height: 50%;
+  transform-origin: bottom right;
+  transform: skewX(-55deg);
+}
+.open-file:hover {
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.048);
+}
+
+
+
+    .button-e {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 12px;
+        gap: 2px;
+        height: 40px;
+        width: 85px;
+        border: none;
+        background: #a549da3d;
+        border-radius: 20px;
+        cursor: pointer;
+        text-decoration: none;
+    
+    }
+
+    .label {
+        line-height: 22px;
+        font-size: 17px;
+        color: #A649DA;
+        font-family: sans-serif;
+        letter-spacing: 1px;
+    }
+
+    .button-e:hover {
+        background: #a549da62;
+    }
+
+    .button-e:hover .svg-icon {
+        animation: lr 1s linear infinite;
+    }
+
+    @keyframes lr {
+        0% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-1px);
+        }
+
+        75% {
+            transform: translateX(1px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+</style>
+
+{% endblock %}

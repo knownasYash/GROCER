@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Edit Category - Grocer
+{% endblock %}
+
+{% block content %}
+    <h1>Edit Category</h1>
+    <form method="post" class="form">
+        <label for="name" class="form-label">
+            <input type="text" name="name" class="form-control" placeholder="Add Here..." required value="{{category.name}}">
+        </label>
+        <input type="submit" value="Save" class="button">
+    </form>
+{% endblock %}
+
+{%block style %}
+<style>
+       h1 {
+        text-align: center;
+        font-family: 'Josefin Sans', sans-serif;
+        margin-top: -200px;
+    }
+    
+    .form{
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+        .form-control {
+  font-family: monospace;
+  outline: none;
+  border: 1px solid #dadada;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: inherit;
+  transition: .3s;
+  color: #D4E7C5;
+  
+}
+
+.form-control:focus {
+  border: 1px solid #BFD8AF;
+  box-shadow: 0 0 0 4px #99BC85;
+}
+
+.button {
+ font-size: 17px;
+ padding: 0.5em 2em;
+ border: transparent;
+ box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+ background: #65B741;
+ color: white;
+ border-radius: 4px;
+ margin-top: 10px;
+}
+
+.button:hover {
+ background: rgb(2,0,36);
+ background: linear-gradient(90deg, rgba(101, 183, 65,1) 0%, rgba(193, 242, 176,1) 100%);
+}
+
+.button:active {
+ transform: translate(0em, 0.2em);
+}
+</style>
+{% endblock %}

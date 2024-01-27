@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg">
+  <header >
+        <div class="container-fluid  ">
+          <a class="navbar-brand" href="/">Grocer</a>
+          <div class="logside collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <!--render auth links if not logged in else normal links-->
+              {% if user %}
+              
+              {%if not user.if_admin %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('orders')}}">
+                    Orders</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('cart')}}">
+                  Cart</a>
+                </li>
+              {% endif %}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('profile')}}">
+                  {{user.username | capitalize }}
+                </a>
+              </li>
+
+              {% else %}
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </header>
+  </nav>        
+
+
+<style>
+
+.nav-item{
+  padding-right: 12px;
+}
+
+
+.navbar-brand {
+        position: fixed;
+        top: 0;
+        left: 1%;
+        z-index: 1000;  
+        width: 12%;
+        background-color: inherit;   
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 35px; 
+        padding: 15px;
+    }
+    
+    .container-fluid {
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(0);
+    display: flex;
+    flex-direction: row;
+    height: 83px;
+    background-color: inherit;
+    backdrop-filter: blur(50px);
+    border-radius: 9px;
+    z-index: 1000;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 25px;
+}
+
+.navbar-nav{
+  position: fixed;
+    top: 13px;
+    right: 1%;
+    transform: translateX(0);
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+    background-color: inherit;
+    border-radius: 9px;
+    z-index: 1000;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 24px;
+}
+
+</style>
+
+
